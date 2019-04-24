@@ -68,7 +68,14 @@ if( !startedSuccessfully ){
 	// handle error!
 }
 ```
-by calling startAnimation(slMeta), you have to create a JavaScript-Object that at least contains either:
+The default animation is 'Gravity'. To get a full list of the available animations from which you can choose, you can call:
+```js
+let animations = SlideShowGL.getAnimationIdentifiers();
+// getAnimationIdentifiers is a static function of the SlideShowGL-Class that returns an array of strings
+```
+You can use one of these strings to set the [animationType].
+<br/>
+By calling startAnimation(slMeta), you have to create a JavaScript-Object that at least contains either:
 <br />
 &nbsp;&nbsp;&nbsp;	- imgPaths: array of strings
 <br />
