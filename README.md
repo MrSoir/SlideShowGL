@@ -40,7 +40,7 @@ const SlideShowGL = require('slideshowgl');
 
 2. Use the module:
 
-⋅⋅2.1 instantiate SlideShowGL:
+⋅⋅1. instantiate SlideShowGL:
 ```js
 let sldShw = new SlideShowGL('<your_canvas_id>'); // this is why it is mandatory to assign an id to your canvas-tag
 if( sldShw.supportsWebGL2() ){
@@ -48,7 +48,7 @@ if( sldShw.supportsWebGL2() ){
 }
 ```
 
-⋅⋅2.2 start the animation:
+⋅⋅2. start the animation:
 ```js
 let slMeta = {
 	// mandatory:
@@ -68,24 +68,24 @@ if( !startedSuccessfully ){
 	// handle error!
 }
 ```
-⋅⋅The default animation is 'Gravity'. To get a full list of the available animations from which you can choose, you can call:
+⋅⋅⋅The default animation is 'Gravity'. To get a full list of the available animations from which you can choose, you can call:
 ```js
 let animations = SlideShowGL.getAnimationIdentifiers();
 // getAnimationIdentifiers is a static function of the SlideShowGL-Class that returns an array of strings
 ```
-⋅⋅You can use one of these strings to set the `animationType`.
-⋅⋅<br/><br/>
-⋅⋅By calling startAnimation(slMeta), you have to create a JavaScript-Object that at least contains either:
-⋅⋅<br />
-⋅⋅&nbsp;&nbsp;&nbsp;	- imgPaths: array of strings
-⋅⋅<br />
-⋅⋅&nbsp;&nbsp;&nbsp;	- images:   array of 'new Images()'-Objects
-⋅⋅<br />
-⋅⋅If you forward imgPaths to the startAnimation-function, SlideShowGL will load the images itself. This may take a while depending on the image-sizes and bandwidth. To avoid loading times, you can also load the images yourself and forward the images directly as an array of 'new Images()'-Objects.
-⋅⋅<br />
-⋅⋅If you forward imgPaths, then you might want to know, when the loading of the images is completed. You can add a callback-function, that will be called when all images are loaded, right before the animation starts:
+⋅⋅⋅You can use one of these strings to set the `animationType`.
+⋅⋅⋅<br/><br/>
+⋅⋅⋅By calling startAnimation(slMeta), you have to create a JavaScript-Object that at least contains either:
+⋅⋅⋅<br />
+⋅⋅⋅&nbsp;&nbsp;&nbsp;	- imgPaths: array of strings
+⋅⋅⋅<br />
+⋅⋅⋅&nbsp;&nbsp;&nbsp;	- images:   array of 'new Images()'-Objects
+⋅⋅⋅<br />
+⋅⋅⋅If you forward imgPaths to the startAnimation-function, SlideShowGL will load the images itself. This may take a while depending on the image-sizes and bandwidth. To avoid loading times, you can also load the images yourself and forward the images directly as an array of 'new Images()'-Objects.
+⋅⋅⋅<br />
+⋅⋅⋅If you forward imgPaths, then you might want to know, when the loading of the images is completed. You can add a callback-function, that will be called when all images are loaded, right before the animation starts:
 ```js
 sldShw.onImagesLoaded = ()=>{ do something... };
 ```
-⋅⋅This comes in handy, if you e.g. want to hide the canvas or execute a waiting-indicator as long as the images are still loading.
+⋅⋅⋅This comes in handy, if you e.g. want to hide the canvas or execute a waiting-indicator as long as the images are still loading.
 
