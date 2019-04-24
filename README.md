@@ -28,6 +28,7 @@ HTML:
 <canvas id="<your_canvas_id>"/>
 // it is importat to an id to the canvas. SlideShowGL internally access the canavas by calling:
 // document.getElementById('<your_canvas_id>');
+// of course you can create multiple SlideShowGL-canvases per site!
 ```
 
 Javascript:

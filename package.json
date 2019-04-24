@@ -1,6 +1,6 @@
 {
   "name": "slideshowgl",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "WebGL2 powered slide show with advanced transition animations",
   "main": "index.js",
   "scripts": {
