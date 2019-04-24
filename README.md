@@ -40,7 +40,7 @@ const SlideShowGL = require('slideshowgl');
 
 2. Use the module:
 
-2.1 instantiate SlideShowGL:
+&nbsp;&nbsp; 2.1 instantiate SlideShowGL:
 ```js
 let sldShw = new SlideShowGL('<your_canvas_id>'); // this is why it is mandatory to assign an id to your canvas-tag
 if( sldShw.supportsWebGL2() ){
@@ -48,7 +48,7 @@ if( sldShw.supportsWebGL2() ){
 }
 ```
 
-2.2 start the animation:
+&nbsp;&nbsp; 2.2 start the animation:
 ```js
 let slMeta = {
 	// mandatory:
