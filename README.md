@@ -1,17 +1,6 @@
 # SlideShowGL
 
-_-------------------------------------------_
 
-
-
-**Installation**
-
-I published SLideShowGL as an npm-package. To Install it, use:
-```
-npm i slideshowgl
-```
-
-**Usage**
 
 
 # window
@@ -30,35 +19,40 @@ You can have a look at the already implemented animations on my homepage:
 https://mrsoir-fb.firebaseapp.com/SlideShow
 
 
+
+
+
+
+
 ## Install
 
+I published SLideShowGL as an npm-package. To Install it, use:
 ```shell
 npm i slideshowgl
 ```
 
 ## Usage
 
-
 Because SlideShowGL is powered by WebGL2, you need to create a canvas-tag:
 
 HTML:
 ```js
-const window = new Window();
-
-createTitle('Hi', window);
 <canvas id="<your_canvas_id>"/>
 // it is importat to an id to the canvas. SlideShowGL internally access the canavas by calling:
-// document.getElementByID(<your_canvas_id>);
+// document.getElementById('<your_canvas_id>');
 ```
 
 Javascript:
+
+1. import the module 
 ```js
 // import:
 const SlideShowGL = require('slideshowgl');
 ```
 
-// usage:
-// first you have to instantiate SlideShowGL:
+2. Use the module:
+
+2.1 instantiate SlideShowGL:
 ```js
 let sldShw = new SlideShowGL('<your_canvas_id>'); // this is why it is mandatory to assign an id to your canvas-tag
 if( sldShw.supportsWebGL2() ){
@@ -66,16 +60,14 @@ if( sldShw.supportsWebGL2() ){
 }
 ```
 
-// then you can start the animation:
+2.2 start the animation:
 ```js
-let animationDuration = 1000 * (fastAnimation ? 3 : 10);
-let delayDuration = 2000;
-
 let slMeta = {
 	// mandatory:
 	imgPaths: ['path0.png', 'path1.png', 'path2.png'...],
-	// or:
+	// OR:
 	images: [new Image()-Objects],
+
 	// optional:
 	animationDuration: 3 * 1000,  // 3 seconds
 	delayDuration: 5 * 1000, // 5-seconds time lag between image-transitions
@@ -89,9 +81,13 @@ if( !startedSuccessfully ){
 }
 ```
 by calling startAnimation(slMeta), you have to create a JavaScript-Object that at least contains either:
+<br />
 	- imgPaths: array of strings
+<br />
 	- images:   array of 'new Images()'-Objects
+<br />
 If you forward imgPaths to the startAnimation-function, SlideShowGL will load the images itself. This may take a while depending on the image-sizes and bandwidth. To avoid loading times, you can also load the images yourself and forward the images directly as an array of 'new Images()'-Objects.
+<br />
 If you forward imgPaths, then you might want to know, when the loading of the images is completed. You can add a callback-function, that will be called when all images are loaded, right before the animation starts:
 ```js
 sldShw.onImagesLoaded = ()=>{ do something... };
