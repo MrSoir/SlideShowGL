@@ -202,7 +202,7 @@ class GlFunctionsInstantiator{
 	
 	//-----------------------------------------------------------------
 	
-	genModelView(){
+	genModelView(cameraPos){
 		const modelViewMatrix = glMatrix.mat4.create();
 	
 		// Now move the drawing position a bit to where we want to
@@ -210,13 +210,13 @@ class GlFunctionsInstantiator{
 	
 		glMatrix.mat4.translate(modelViewMatrix,		 // destination matrix
 									   modelViewMatrix,		 // matrix to translate
-									   [0.0, 0.0, -20.0]);	 // amount to translat
+									   cameraPos);	 // amount to translat
 	
 		return modelViewMatrix;
 	}
-	setModelView(){
+	setModelView(cameraPos){
 		if (!this.uniforms.get('modelView')){
-			let modelViewMatrix = this.genModelView();
+			let modelViewMatrix = this.genModelView(cameraPos);
 			this.evalUniformLayoutLocation('modelView', modelViewMatrix);
 		}else{
 			this.evalUniformLayoutLocation('modelView');

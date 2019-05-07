@@ -131,7 +131,7 @@ class DelayedTileAnimation{
 		this._animMeta = {
 			tileCentersPerRow: 8,
 			tileAnimID: 0,
-			tileAnimIDCount: 3
+			tileAnimIDCount: 14
 		};
 		this.genTileCenters();
 		
@@ -160,7 +160,60 @@ class DelayedTileAnimation{
 		};
 		
 		let randomIDs;
-		if(tileAnimID === 2){
+		let dists;
+		if(tileAnimID >= 4 ||
+			tileAnimID <= 7){
+			dists = [];
+			for(let id=0; id < tileCentersCount; ++id){
+				let r = id / tileCentersPerRow;
+				let c = id % tileCentersPerRow;
+				let x = strt + (c + 0.5) * offs;
+				let y = strt + (r + 0.5) * offs;
+				let d;
+				switch(tileAnimID){
+					case 4:
+						d = x*x + y*y;
+						break;
+					case 5:
+						d = x*x + y*y;
+						break;
+					case 6:
+						d = y*y;
+						break;
+					case 7:
+						d = y*y;
+						break;
+					case 8:
+						d = x*x;
+						break;
+					case 9:
+						d = x*x;
+						break;
+					case 10:
+						d = y*y + x;
+						break;
+					case 11:
+						d = y*y + x;
+						break;
+					case 12:
+						d = x*x + y;
+						break;
+					case 13:
+						d = x*x + y;
+						break;
+				}
+				dists.push( {id: id, dist: d} );
+			}
+			let tileAnimdIdOffs = (tileAnimID-4) % 2;
+			switch(tileAnimdIdOffs){
+				case 0:
+					dists = StaticFunctions.sort(dists, v=>v.dist);
+					break;
+				case 1:
+					dists = StaticFunctions.sort(dists, v=>-v.dist);
+					break;
+			}
+		}else if(tileAnimID === 6){
 			randomIDs = [];
 			for(let i=0; i < tileCentersCount; ++i){
 				randomIDs.push(i);
@@ -172,8 +225,24 @@ class DelayedTileAnimation{
 			for(let c=0; c < tileCentersPerRow; ++c){
 				if(tileAnimID === 0){
 					genPolygons(r,c);
-				}else if (tileAnimID == 1){
+				}else if (tileAnimID === 1){
 					genPolygons(c,r);
+				}else if (tileAnimID === 2 ||
+							 tileAnimID === 3){
+					let id = r * tileCentersPerRow + c;
+					let colID = (r % 2) == 0 ? c : (tileCentersPerRow -1 - c);
+					if(tileAnimID == 2){
+						genPolygons(r, colID);
+					}else{
+						genPolygons(colID,r);
+					}
+				}else if (tileAnimID >= 4 ||
+							 tileAnimID <= 13){
+					let id = r * tileCentersPerRow + c;
+					let distId = dists[id];
+					let tarR = Math.floor(distId.id / tileCentersPerRow);
+					let tarC = Math.floor(distId.id % tileCentersPerRow);
+					genPolygons(tarR, tarC);
 				}else{
 					let id = randomIDs[r * tileCentersPerRow + c];
 					let r_rnd = Math.floor(id / tileCentersPerRow);

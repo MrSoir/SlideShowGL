@@ -104,6 +104,15 @@ var vertexShaderSource = `
 		else{
 			float sigX = (s0 - intpolX) / (s0 - s1);
 			float sig = sigmoid(sigX);
+			float presOffs = 0.02 +  randoms.x * 0.03;
+			if(sig < presOffs)
+			{
+				return 0.0;
+			}else if(sig > (1.0-presOffs)){
+				return 1.0;
+			}else{
+				return sig;
+			}
 			return sig;
 		}
 	}
@@ -128,7 +137,7 @@ var vertexShaderSource = `
 		return vec3(trnslX, trnslY, trnslZ);
 	}
 	
-	mat4 genPictureScale(float trnsfrmPrgrs){		
+	mat4 genPictureScale(float trnsfrmPrgrs){
 		float sclFctr = 1.0 + sin(trnsfrmPrgrs * PI) * 3.0;
 		float sclX = sclFctr;
 		float sclY = sclFctr;

@@ -101,7 +101,40 @@ var TriangleSplitter = {
 //		return this.splitTriangleIter(vs, splitDepth);
 	},
 	
+	splitRectGrid: function(v0, v1, splitDepth = INIT_SPLIT_DEPTH){
+		let rowCnt = splitDepth;//Math.floor((2 ** splitDepth) ** 0.5);
+		
+		let xStart = v0[0];
+		let yStart = v0[1];
+		let xEnd = v1[0];
+		let yEnd = v1[1];
+		let rngX = xEnd - xStart;
+		let rngY = yEnd - yStart;
+		
+		let polys = [];
+		let xOffs = rngX / rowCnt;
+		let yOffs = rngX / rowCnt;
+		for(let r=0; r < rowCnt; ++r){
+			for(let c=0; c < rowCnt; ++c){
+				let cOffs = xStart + c * xOffs;
+				let rOffs = yStart + r * yOffs;
+				
+				let v0 = [cOffs,      rOffs];
+				let v1 = [cOffs,      rOffs+yOffs];
+				let v2 = [cOffs+xOffs, rOffs+yOffs];
+				let v3 = [cOffs+xOffs, rOffs];
+				
+				polys.push( [v0, v1, v2] );
+				polys.push( [v0, v2, v3] );
+			}
+		}
+		return polys;
+	},
+	
 	splitRect: function(v0, v1, splitDepth = 13){
+/*		let polys = this.splitRectGrid(v0, v1, splitDepth);
+		return polys;*/
+		
 		const upperTringl = [v0, [v0[0], v1[1]], v1];
 		const lowerTringl = [v0, [v1[0], v0[1]], v1];
 		

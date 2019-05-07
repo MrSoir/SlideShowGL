@@ -18,6 +18,18 @@ var StaticFunctions = {
 		}
 		return a;
 	},
+	sort: function(xs, valueGetter=v=>v){
+		return xs.sort((v0, v1)=>{
+			let val0 = valueGetter(v0);
+			let val1 = valueGetter(v1);
+			if(val0 > val1){
+				return 1;
+			}else if (val0 < val1){
+				return -1;
+			}
+			return 0;
+		});
+	},
 	arraysEqual: function(a0, a1){
 		if (a0 === a1){return true;}
 		if (a0 === null || a1 === null){return false;}

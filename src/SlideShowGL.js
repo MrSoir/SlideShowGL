@@ -13,6 +13,9 @@ const GravityAnimation = require('./GravityAnimation');
 const TileAnimation = require('./TileAnimation');
 const DelayedTileAnimation = require('./DelayedTileAnimation');
 const ZoomTileAnimation = require('./ZoomTileAnimation');
+const MirrorAnimation = require('./MirrorAnimation');
+const CenterSplitAnimation = require('./CenterSplitAnimation');
+//const CubeAnimation = require('./CubeAnimation');
 
 
 //---------------------------CONSTANTS-----------------------------
@@ -58,6 +61,9 @@ function _fillAnims(){
 	ANIMATIONS.set('Tile',  		 	TileAnimation);
 	ANIMATIONS.set('TileDelayed',  	DelayedTileAnimation);
 	ANIMATIONS.set('TileRandom',		ZoomTileAnimation);
+	ANIMATIONS.set('Mirror',			MirrorAnimation);
+	ANIMATIONS.set('CenterSplit', 	CenterSplitAnimation);
+//	ANIMATIONS.set('Cube', 				CubeAnimation);
 }
 _fillAnims();
 
@@ -80,6 +86,8 @@ var vertexShaderSource = `#version 300 es
 	layout (location = 6) in vec3 randoms;
 	
 	//-------uniforms-----------
+	
+	uniform vec3 cameraPos;
 	
 	uniform mat4 modelView;
 	uniform mat4 perspective;
@@ -243,7 +251,8 @@ class SlideShowGL{
 			backgroundColor: [1.0,1.0,1.0, 1.0],
 			imgRatio: [1,1],
 			instancing: false,
-			instanceCount: 2
+			instanceCount: 2,
+			cameraPos: [0, 0, -20]
 		};
 		
 		if(!canvasID){
@@ -372,6 +381,7 @@ class SlideShowGL{
 		
 		this.glFunctions.useProgram('picture');
 		
+		this.glFunctions.setUniformVector3fv('cameraPos', this.glMeta.cameraPos);
 		this.glFunctions.setUniform1f('progress', this.pictureData.progress);
 		this.glFunctions.setUniformVector2fv('imgRatio', this.glMeta.imgRatio);
 		
@@ -499,6 +509,10 @@ class SlideShowGL{
 		}
 		this.animationType = new AnimConstr(this.glFunctions);
 		this.animationType.setGL(this.gl);
+		if(this.animationType.instancing){
+			this.glMeta.instancing = true;
+			this.glMeta.instanceCount = this.animationType.instanceCount;
+		}
 		return true;
 	}
 	
@@ -567,7 +581,7 @@ class SlideShowGL{
 		
 		this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
 		
-		this.glFunctions.setModelView();
+		this.glFunctions.setModelView(this.glMeta.cameraPos);
 		this.glFunctions.setPerspective();
 		
 		this.createPane();
